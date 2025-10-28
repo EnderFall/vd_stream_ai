@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\TransactionController;
@@ -13,7 +14,11 @@ use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\CommentController;
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        return redirect('/dashboard');
+    } else {
+        return redirect()->route('login');
+    }
 });
 
 Route::middleware(['auth'])->group(function () {
